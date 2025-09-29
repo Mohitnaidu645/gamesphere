@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Participate in Tournament</title>
+  <link rel="stylesheet" href="style1.css" />
+</head>
+<body>
+  <div class="form-container">
+    <h2>Participate in Tournament</h2>
+    <form class="participation-form" id="participationForm">
+      
+      <label for="tournament">Select BGMI Tournament</label>
+      <select id="tournament" name="tournament" required>
+        <option value="">-- Choose Tournament --</option>
+        <option value="BGMS">BGMS</option>
+        <option value="PMGC">PMGC</option>
+        <option value="BMIC">BMIC</option>
+      </select>
+
+      <label for="teamName">Team Name</label>
+      <input type="text" id="teamName" name="teamName" placeholder="Enter team name" required />
+
+      <label for="teamSize">Number of Players</label>
+      <input type="number" id="teamSize" name="teamSize" min="1" max="5" required />
+
+      <div id="playersContainer"></div>
+
+      <button type="button" id="addPlayersBtn">Add Players</button>
+      <button type="submit" class="submit-btn">Submit Participation</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("participationForm");
+    const addPlayersBtn = document.getElementById("addPlayersBtn");
+    const playersContainer = document.getElementById("playersContainer");
+
+    // Generate player input fields
+    addPlayersBtn.addEventListener("click", () => {
+      playersContainer.innerHTML = ""; // clear old fields
+      const teamSize = parseInt(document.getElementById("teamSize").value, 10);
+
+      if (!teamSize || teamSize < 1) {
+        alert("Please enter a valid team size.");
+        return;
+      }
+
+      for (let i = 1; i <= teamSize; i++) {
+        const div = document.createElement("div");
+        div.classList.add("player-fields");
+        div.innerHTML = `
+  <div class="player-card">
+    <h4 class="player-title">Player ${i}</h4>
+    <div class="form-group">
+      <label for="playerName${i}" class="form-label">Name</label>
+      <input type="text" id="playerName${i}" name="playerName${i}" class="form-input" placeholder="Enter name ${i}" required />
+    </div>
+    <div class="form-group">
+      <label for="playerEmail${i}" class="form-label">Email</label>
+      <input type="email" id="playerEmail${i}" name="playerEmail${i}" class="form-input" placeholder="xyz${i}@gmail.com" required />
+    </div>
+  </div>
+`;
+
+        playersContainer.appendChild(div);
+      }
+    });
+
+    // Handle form submission
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const tournament = document.getElementById("tournament").value;
+      const teamName = document.getElementById("teamName").value;
+      const teamSize = parseInt(document.getElementById("teamSize").value, 10);
+
+      const players = [];
+      for (let i = 1; i <= teamSize; i++) {
+        players.push({
+          name: document.getElementById(`playerName${i}`).value,
+          email: document.getElementById(`playerEmail${i}`).value,
+        });
+      }
+
+      const data = { tournament, teamName, players };
+
+      try {
+        const res = await fetch("http://localhost:5000/participate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+        alert(result.message || result.error);
+      } catch (err) {
+        alert("Error submitting participation: " + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
