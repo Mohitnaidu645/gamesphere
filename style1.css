@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: #f3f6fb;
+  background: #030507;
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -90,7 +90,7 @@ button[type="button"] {
   background: linear-gradient(90deg, #230f3d, #692bd1);
 }
 
-/* Responsive Design */
+
 @media screen and (max-width: 600px) {
   .form-container {
     padding: 20px 15px;

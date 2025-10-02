@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Select a Game</title>
+  <link rel="stylesheet" href="game.css" />
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Choose Your Game 🎮</h1>
+    <div class="button-container">
+      <button class="game-btn" onclick="goTo('valorant')">Valorant</button>
+      <button class="game-btn" onclick="goTo('pubg')">PUBG</button>
+      <button class="game-btn" onclick="goTo('cs2')">Counter-Strike 2</button>
+      <button class="game-btn" onclick="goTo('bgmi')">BGMI</button>
+      <button class="game-btn" onclick="goTo('codm')">CODM</button>
+    </div>
+  </div>
+
+  <script>
+    function goTo(game) {
+      if(game=='bgmi'){window.location.href = `reg.html?tournament=${game}`;};
+      
+    }
+  </script>
+</body>
+</html>
