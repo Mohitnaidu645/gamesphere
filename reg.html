@@ -37,9 +37,9 @@
     const addPlayersBtn = document.getElementById("addPlayersBtn");
     const playersContainer = document.getElementById("playersContainer");
 
-    // Generate player input fields
+    // ✅ Generate player input fields
     addPlayersBtn.addEventListener("click", () => {
-      playersContainer.innerHTML = ""; // clear old fields
+      playersContainer.innerHTML = "";
       const teamSize = parseInt(document.getElementById("teamSize").value, 10);
 
       if (!teamSize || teamSize < 1) {
@@ -50,38 +50,70 @@
       for (let i = 1; i <= teamSize; i++) {
         const div = document.createElement("div");
         div.classList.add("player-fields");
-        div.innerHTML = `
-  <div class="player-card">
-    <h4 class="player-title">Player ${i}</h4>
-    <div class="form-group">
-      <label for="playerName${i}" class="form-label">Name</label>
-      <input type="text" id="playerName${i}" name="playerName${i}" class="form-input" placeholder="Enter name ${i}" required />
-    </div>
-    <div class="form-group">
-      <label for="playerEmail${i}" class="form-label">Email</label>
-      <input type="email" id="playerEmail${i}" name="playerEmail${i}" class="form-input" placeholder="xyz${i}@gmail.com" required />
-    </div>
-  </div>
-`;
+
+        if (i === 1) {
+          // 🟢 Team Leader
+          div.innerHTML = `
+            <div class="player-card">
+              <h4 class="player-title">Leader (Player ${i})</h4>
+              <label for="playerName${i}">Name</label>
+              <input type="text" id="playerName${i}" placeholder="Leader name" required />
+
+              <label for="playerEmail${i}">Gmail</label>
+              <input type="email" id="playerEmail${i}" placeholder="leader@gmail.com" required />
+
+              <label for="playerGameId${i}">In-Game ID</label>
+              <input type="text" id="playerGameId${i}" placeholder="Enter in-game ID" required />
+            </div>
+          `;
+        } else {
+          // 🟠 Other Players
+          div.innerHTML = `
+            <div class="player-card">
+              <h4 class="player-title">Player ${i}</h4>
+              <label for="playerName${i}">Name</label>
+              <input type="text" id="playerName${i}" placeholder="Player ${i} name" required />
+
+              <label for="playerGameId${i}">In-Game ID</label>
+              <input type="text" id="playerGameId${i}" placeholder="Enter in-game ID" required />
+            </div>
+          `;
+        }
 
         playersContainer.appendChild(div);
       }
     });
 
-    // Handle form submission
+    // ✅ Form Submission
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const tournament = document.getElementById("tournament").value;
-      const teamName = document.getElementById("teamName").value;
+      const tournament = document.getElementById("tournament").value.trim();
+      const teamName = document.getElementById("teamName").value.trim();
       const teamSize = parseInt(document.getElementById("teamSize").value, 10);
+
+      if (!tournament || !teamName || !teamSize) {
+        alert("Please fill in all required fields.");
+        return;
+      }
 
       const players = [];
       for (let i = 1; i <= teamSize; i++) {
-        players.push({
-          name: document.getElementById(`playerName${i}`).value,
-          email: document.getElementById(`playerEmail${i}`).value,
-        });
+        const name = document.getElementById(`playerName${i}`).value.trim();
+        const gameId = document.getElementById(`playerGameId${i}`).value.trim();
+        let email = "";
+
+        // Leader Gmail validation
+        if (i === 1) {
+          email = document.getElementById(`playerEmail${i}`).value.trim();
+          const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+          if (!gmailRegex.test(email)) {
+            alert("❌ Please enter a valid Gmail address for the team leader.");
+            return;
+          }
+        }
+
+        players.push({ name, email, gameId });
       }
 
       const data = { tournament, teamName, players };

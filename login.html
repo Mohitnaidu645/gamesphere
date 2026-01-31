@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - GameSphere</title>
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+  <div class="auth-container">
+    <h2>🔑 Login</h2>
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input type="email" id="email" required placeholder="Enter your email" />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required placeholder="Enter your password" />
+
+      <button type="submit" class="auth-btn">Login</button>
+      <p>Don’t have an account? <a href="register.html">Register</a></p>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    const res = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.token);
+      alert("✅ Login successful!");
+      window.location.href = "index.html";
+    } else {
+      alert("❌ " + data.error);
+    }
+  } catch (err) {
+    alert("⚠️ Server error, try again later.");
+  }
+});
+  </script>
+</body>
+</html>

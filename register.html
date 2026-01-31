@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - GameSphere</title>
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+  <div class="auth-container">
+    <h2>📝 Register</h2>
+    <form id="registerForm">
+      <label for="username">Username</label>
+      <input type="text" id="username" required placeholder="Choose a username" />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required placeholder="Enter your email" />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required placeholder="Enter a password" />
+
+      <button type="submit" class="auth-btn">Register</button>
+      <p>Already have an account? <a href="login.html">Login</a></p>
+    </form>
+  </div>
+
+  <script>
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("username").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  try {
+    const res = await fetch("http://localhost:5000/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email, password }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("✅ Registration successful! Please login.");
+      window.location.href = "login.html";
+    } else {
+      alert("❌ " + data.error);
+    }
+  } catch (err) {
+    alert("⚠️ feature in progress");
+  }
+});
+  </script>
+</body>
+</html>

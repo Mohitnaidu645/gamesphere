@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Host Tournament</title>
+  <link rel="stylesheet" href="host.css" />
+</head>
+<body>
+  <div class="form-container">
+    <h2>🏆 Host a Tournament</h2>
+    <form id="hostForm">
+      
+      <label for="tournamentName">Tournament Name</label>
+      <input type="text" id="tournamentName" name="tournamentName" placeholder="Enter tournament name" required />
+
+      <label for="game">Select Game</label>
+      <select id="game" name="game" required>
+        <option value="">-- Choose Game --</option>
+        <option value="valorant">Valorant</option>
+        <option value="pubg">PUBG</option>
+        <option value="cs2">Counter-Strike 2</option>
+        <option value="bgmi">BGMI</option>
+        <option value="codm">CODM</option>
+      </select>
+
+      <label for="date">Tournament Date</label>
+      <input type="date" id="date" name="date" required />
+
+      <label for="maxTeams">Max Teams</label>
+      <input type="number" id="maxTeams" name="maxTeams" min="2" max="100" required />
+
+      <button type="submit" class="submit-btn">Create Tournament</button>
+
+              <a href="index.html" class="home-btn">⬅ Back to Home</a>
+  </div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("hostForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const tournamentName = document.getElementById("tournamentName").value;
+      const game = document.getElementById("game").value;
+      const date = document.getElementById("date").value;
+      const maxTeams = document.getElementById("maxTeams").value;
+
+      const data = { tournamentName, game, date, maxTeams };
+
+      try {
+        const res = await fetch("http://localhost:5000/host", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+        alert(result.message || result.error);
+      } catch (err) {
+        alert("Error hosting tournament: " + err.message);
+      }
+    });
+    
+  </script>
+</body>
+</html>

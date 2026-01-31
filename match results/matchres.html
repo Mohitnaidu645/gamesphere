@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Match Result</title>
+  <link rel="stylesheet" href="match.css" />
+</head>
+<body>
+
+  <div class="container">
+    <h2>🏆 Add Match Result</h2>
+
+    <form id="matchForm">
+      <input type="text" id="tournament" placeholder="Tournament Name" required />
+      <input type="number" id="matchNo" placeholder="Match Number" required />
+      <input type="text" id="teamName" placeholder="Team Name" required />
+      <input type="number" id="placement" placeholder="Placement (1,2,3...)" required />
+      <input type="number" id="kills" placeholder="Kills" required />
+      <input type="number" id="points" placeholder="Points" required />
+
+      <button type="submit">Submit Result</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("matchForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const data = {
+        tournament: document.getElementById("tournament").value,
+        matchNo: Number(document.getElementById("matchNo").value),
+        teamName: document.getElementById("teamName").value,
+        placement: Number(document.getElementById("placement").value),
+        kills: Number(document.getElementById("kills").value),
+        points: Number(document.getElementById("points").value),
+      };
+
+      try {
+        const res = await fetch("http://localhost:5000/match-result", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+        alert(result.message || result.error);
+      } catch (err) {
+        alert("❌ Failed to submit result");
+      }
+    });
+  </script>
+
+</body>
+</html>

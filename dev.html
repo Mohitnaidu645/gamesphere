@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Development in Progress</title>
+  <style>
+    
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #250f27, #382043, #522c64);
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+
+    .moving-text {
+      font-size: 3rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: white;
+      position: relative;
+      animation: moveText 6s linear infinite;
+      background: linear-gradient(90deg, #fff, #ff69b4, #00ffff, #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes moveText {
+      0% {
+        transform: translateX(-100%);
+      }
+      50% {
+        transform: translateX(0%);
+      }
+      100% {
+        transform: translateX(100%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="moving-text">🚧 Development in Progress 🚧</div>
+</body>
+</html>
