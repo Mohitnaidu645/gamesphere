@@ -1,0 +1,209 @@
+/* host.css — Tournament Host Form */
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Nunito:wght@400;500;600&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --brand-start: #424b6d;
+  --brand-end: #764ba2;
+  --accent: #667eea;
+  --accent-light: #8a9bf5;
+  --surface: #ffffff;
+  --bg: linear-gradient(45deg, #f0f2f5, #e8ecf0);
+  --text-dark: #333;
+  --text-mid: #555;
+  --text-light: #888;
+  --border: #dde2f0;
+  --radius-card: 18px;
+  --radius-input: 10px;
+  --radius-btn: 30px;
+  --shadow-card: 0 8px 32px rgba(102, 126, 234, 0.13);
+  --shadow-hover: 0 16px 40px rgba(102, 126, 234, 0.22);
+  --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 2rem 1rem;
+  color: var(--text-dark);
+}
+
+/* ── Card ── */
+.form-container {
+  background: var(--surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 2.8rem 2.4rem 2.4rem;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.5s ease both;
+}
+
+/* decorative top stripe matching navbar gradient */
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: linear-gradient(135deg, var(--brand-start) 0%, var(--brand-end) 100%);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Heading ── */
+.form-container h2 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--brand-start);
+  margin-bottom: 1.8rem;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ── Form layout ── */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Labels ── */
+label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin-bottom: 0.4rem;
+  margin-top: 1.1rem;
+}
+
+label:first-of-type {
+  margin-top: 0;
+}
+
+/* ── Inputs & Select ── */
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 0.72rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-input);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.98rem;
+  color: var(--text-dark);
+  background: #fafbff;
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus {
+  border-color: var(--accent);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+input::placeholder {
+  color: #b0b8cc;
+  font-weight: 400;
+}
+
+/* custom select arrow */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.4rem;
+  cursor: pointer;
+}
+
+/* ── Buttons ── */
+.submit-btn,
+.home-btn {
+  display: block;
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+}
+
+.submit-btn {
+  margin-top: 1.8rem;
+  background: linear-gradient(135deg, var(--brand-start) 0%, var(--brand-end) 100%);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(118, 75, 162, 0.35);
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(118, 75, 162, 0.45);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(118, 75, 162, 0.3);
+}
+
+.home-btn {
+  margin-top: 0.9rem;
+  background: #fff;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  font-size: 1rem;
+}
+
+.home-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+  background: #f4f6ff;
+}
+
+.home-btn:active {
+  transform: translateY(0);
+}
+
+/* ── Responsive ── */
+@media (max-width: 520px) {
+  .form-container {
+    padding: 2rem 1.4rem 1.8rem;
+  }
+
+  .form-container h2 {
+    font-size: 1.6rem;
+  }
+}
